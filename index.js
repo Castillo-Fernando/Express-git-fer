@@ -8,15 +8,26 @@ app.get('/', (req, res) => {
   res.send('API funcionando');
 });
 
-app.get('/alumnos', async (req, res) => {
+app.get('/usuarios/:id', async (req, res) => {
   try {
-    const resultado = await pool.query('SELECT * FROM alumno');
-    res.json(resultado.rows);
+    const { id } = req.params;
+
+    const resultado = await pool.query(
+      'SELECT * FROM usuario WHERE id = $1',
+      [id]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    res.json(resultado.rows[0]);
   } catch (error) {
-    console.error('Error al consultar alumnos:', error);
-    res.status(500).json({ error: 'Error al obtener los alumnos' });
+    console.error('Error al consultar usuario:', error);
+    res.status(500).json({ error: 'Error al obtener el usuario' });
   }
 });
+
 
 app.get('/materias', async (req, res) => {
   try {
