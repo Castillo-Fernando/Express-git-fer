@@ -49,6 +49,22 @@ app.get('/materias/:id', async (req, res) => {
   }
 });
 
+app.get('/usuarios', async (req, res) => {
+  // consulta todos los usuarios
+});
+
+app.get('/usuarios/:id', async (req, res) => {
+  // consulta un usuario por id
+});
+
+app.get('/materias', async (req, res) => {
+  // consulta todas las materias
+});
+
+app.get('/materias/:id', async (req, res) => {
+  // consulta una materia por id
+});
+
 app.post('/materias', async (req, res) => {
   try {
     const { nombre, descripcion } = req.body;
