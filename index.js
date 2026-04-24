@@ -18,6 +18,25 @@ app.get('/alumnos', async (req, res) => {
   }
 });
 
+app.post('/alumnos', async (req, res) => {
+  try {
+    const { nombre, apellido, edad, correo } = req.body;
+
+    const resultado = await pool.query(
+      'INSERT INTO alumno (nombre, apellido, edad, correo) VALUES ($1, $2, $3, $4) RETURNING *',
+      [nombre, apellido, edad, correo]
+    );
+
+    res.status(201).json({
+      mensaje: 'Alumno insertado correctamente',
+      alumno: resultado.rows[0]
+    });
+  } catch (error) {
+    console.error('Error al insertar alumno:', error);
+    res.status(500).json({ error: 'Error al insertar el alumno' });
+  }
+});
+
 app.get('/usuario', (req, res) => {
   const usuario = {
     id: 1,
