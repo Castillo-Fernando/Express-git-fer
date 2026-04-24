@@ -12,19 +12,23 @@ app.get('/usuarios/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'El id debe ser numérico' });
+    }
+
     const resultado = await pool.query(
-      'SELECT * FROM usuario WHERE id = $1',
+      'SELECT * FROM alumno WHERE id = $1',
       [id]
     );
 
     if (resultado.rows.length === 0) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
+      return res.status(404).json({ error: 'Alumno no encontrado' });
     }
 
     res.json(resultado.rows[0]);
   } catch (error) {
-    console.error('Error al consultar usuario:', error);
-    res.status(500).json({ error: 'Error al obtener el usuario' });
+    console.error('Error al consultar alumno:', error);
+    res.status(500).json({ error: 'Error al obtener el alumno' });
   }
 });
 
@@ -32,6 +36,10 @@ app.get('/usuarios/:id', async (req, res) => {
 app.get('/materias/:id', async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'El id debe ser numérico' });
+    }
 
     const resultado = await pool.query(
       'SELECT * FROM materia WHERE id = $1',
@@ -50,20 +58,25 @@ app.get('/materias/:id', async (req, res) => {
 });
 
 app.get('/usuarios', async (req, res) => {
-  // consulta todos los usuarios
+  try {
+    const resultado = await pool.query('SELECT * FROM alumno');
+    res.json(resultado.rows);
+  } catch (error) {
+    console.error('Error al consultar usuarios:', error);
+    res.status(500).json({ error: 'Error al obtener los usuarios' });
+  }
 });
-
-app.get('/usuarios/:id', async (req, res) => {
-  // consulta un usuario por id
-});
-
 app.get('/materias', async (req, res) => {
-  // consulta todas las materias
+  try {
+    const resultado = await pool.query('SELECT * FROM materia');
+    res.json(resultado.rows);
+  } catch (error) {
+    console.error('Error al consultar materias:', error);
+    res.status(500).json({ error: 'Error al obtener las materias' });
+  }
 });
 
-app.get('/materias/:id', async (req, res) => {
-  // consulta una materia por id
-});
+
 
 app.post('/materias', async (req, res) => {
   try {
