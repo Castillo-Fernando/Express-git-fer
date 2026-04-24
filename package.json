@@ -1,0 +1,24 @@
+{
+  "name": "express-git-fer",
+  "version": "1.0.0",
+  "description": "Express-git-fer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Castillo-Fernando/Express-git-fer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Castillo-Fernando/Express-git-fer/issues"
+  },
+  "homepage": "https://github.com/Castillo-Fernando/Express-git-fer#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
